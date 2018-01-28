@@ -2,3 +2,4 @@
 results/** 
 results/**/** 
 !results/*.md
+analysis/__pycache__
