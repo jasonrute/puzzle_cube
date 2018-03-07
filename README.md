@@ -23,10 +23,11 @@ I still hold out hope that a different reinforcement algorithm can be used to so
 
 ## Getting started with the code ##
 
-To clone and run this code, run the following commands.  (The `--recursive` in the first command, ensures you clone the `code` submodule as well.)
+To clone and run this code, run the following commands.  (The `--recursive` in the first command ensures you clone the `code` submodule as well.)
 - `git clone --recursive https://github.com/jasonrute/puzzle_cube`
 - `cd puzzle_cube/code`
 - `python3 train.py`
+
 Install any missing packages using pip.  
 
 Better yet, look at `code/config.py` for various settings that can be changed.  For example, lower the number of `games_per_generation` (a "game" is one attempt to solve a randomly shuffled cube).
