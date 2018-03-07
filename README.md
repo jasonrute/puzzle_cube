@@ -23,12 +23,15 @@ I still hold out hope that a different reinforcement algorithm can be used to so
 
 ## Getting started with the code ##
 
-If one wants to run the code, run:
-- `cd code`
+To clone and run this code, run the following commands.  (The `--recursive` in the first command, ensures you clone the `code` submodule as well.)
+- `git clone --recursive https://github.com/jasonrute/puzzle_cube`
+- `cd puzzle_cube/code`
 - `python3 train.py`
-Install any missing packages using pip.
+Install any missing packages using pip.  
 
 Better yet, look at `code/config.py` for various settings that can be changed.  For example, lower the number of `games_per_generation` (a "game" is one attempt to solve a randomly shuffled cube).
+
+(If you are forking this project, you may have to fork both this respository and [jasonrute/puzzle_cube_code](https://github.com/jasonrute/puzzle_cube_code).  Then you may have to reassociate the URL for the `code` submodule.  I am not sure.  See [here](https://blog.github.com/2016-02-01-working-with-submodules/).)
 
 The `code` directory is a separate repository.  After making any changes to the code, commit the changes to the code repository.  Then the results will be saved in a directory under `results`. (The directory is named using the `git describe` command which is run from inside the code repository.)  To use a trained model from a previous run put the name of that directory in the `prev_versions` list in the `config.py` file, e.g. 
 `prev_versions = ['v1.0.2-r2', 'v1.0.2-r']`
