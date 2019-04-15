@@ -7,6 +7,12 @@ More technically, I use a combination of a residual/convolutional neural network
 
 The puzzle cube is a fun choice for reinforcement learning, because it is non-trivial for a human to learn from scratch.  (For example, I don’t even know how to solve one, even though I have spent a number of years trying on my own.)  However, for some of those who do know an algorithm, solving the cube is second nature, involving just what seems to be pattern recognition and intuition, not deep mathematical reasoning.  This suggests that the right reinforcement learning algorithm could be used to learn to solve the cube—especially algorithms using neural networks, which are good at pattern recognition.
 
+**Update 1, April 15, 2019:** _In the year since this project was completed, there has been a break through in using neural networks to solve the puzzle cube.  McAleer, Agostinelli, Shmakov, and Baldi
+([preprint](https://arxiv.org/abs/1805.07470), [pre-conference version](https://openreview.net/forum?id=Hyfn2jCcKm)) independently used reinforcement learning to solve the puzzle cube.  There are many similarities between their work and mine including the use of Monte Carlo tree search.  Despite their progress, there is still a lot to be done on solving the puzzle cube with reinforcement learning.  While McAleer et al.'s trained algorithm solves any puzzle cube, it often takes hours to do so, whereas hand-programmed solvers can do so instantly.  See [this expository article](https://medium.com/datadriveninvestor/reinforcement-learning-to-solve-rubiks-cube-and-other-complex-problems-106424cf26ff) for an (unsuccessful) attempt to reproduce McAleer et al.'s results._
+
+
+**Update 2, April 15, 2019:** _I made this code base much easier to use, and I've supplied pretrained weights so one doesn't have to train their own network.  See [Getting Started With The Code](#getting-started-with-the-code)._
+
 ## Results ##
 
 ![Graph of performance of policy and policy+MCTS](plot.png)
@@ -23,15 +29,29 @@ I still hold out hope that a different reinforcement algorithm can be used to so
 
 ## Getting started with the code ##
 
-To clone and run this code, run the following commands.  (The `--recursive` in the first command ensures you clone the `code` submodule as well.)
-- `git clone --recursive https://github.com/jasonrute/puzzle_cube`
-- `cd puzzle_cube/code`
-- `python3 train.py`
+### Cloning the repo ###
+```bash
+$ git clone --recursive https://github.com/jasonrute/puzzle_cube
+```
+(The `--recursive` ensures you clone the `code` submodule as well.)
 
-Install any missing packages using pip.  
+### Using the pretrained network ###
+```bash
+$ cd puzzle_cube/code/
+$ python3 example.py
+```
+To run this you will need TensorFlow, as well as a number of other packages which can be installed using pip.  The `example.py` script is designed to be easy to follow and adapt.  This code runs fine on my MacBook Air.
 
-Better yet, look at `code/config.py` for various settings that can be changed.  For example, lower the number of `games_per_generation` (a "game" is one attempt to solve a randomly shuffled cube).
+### Training a network from scratch ###
+```bash
+$ cd puzzle_cube/code/
+$ python3 train.py
+```
+The output is a bit cryptic, but as long as it is running, it is training new networks which are stored in the `results` directory.  Training is too slow and memory intesive to run on my Macbook Air.  Instead I trained it for 34 generations (which took \~2 days) on an AWS g3.4x.large spot instance.
 
+To dig in more, look at `code/config.py` for various settings that can be changed.  For example, lower the number of `games_per_generation` (a "game" is one attempt to solve a randomly shuffled cube).
+
+### Other details ###
 (If you are forking this project, you may have to fork both this respository and [jasonrute/puzzle_cube_code](https://github.com/jasonrute/puzzle_cube_code).  Then you may have to reassociate the URL for the `code` submodule.  I am not sure.  See [here](https://blog.github.com/2016-02-01-working-with-submodules/).)
 
 The `code` directory is a separate repository.  After making any changes to the code, commit the changes to the code repository.  Then the results will be saved in a directory under `results`. (The directory is named using the `git describe` command which is run from inside the code repository.)  To use a trained model from a previous run put the name of that directory in the `prev_versions` list in the `config.py` file, e.g. 
